@@ -15,7 +15,7 @@ class Selenium {
      * Chrome 79
      */
     static void setupChrome() {
-        System.setProperty("webdriver.chrome.driver", ".\\.\\drivers\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "target\\classes\\chromedriver.exe");
         browser = new ChromeDriver();
     }
 
@@ -23,7 +23,7 @@ class Selenium {
      * Firefox 72
      */
     static void setupFirefox() {
-        System.setProperty("webdriver.gecko.driver", ".\\.\\drivers\\geckodriver.exe");
+        System.setProperty("webdriver.gecko.driver", "target\\classes\\geckodriver.exe");
         browser = new FirefoxDriver();
     }
 
