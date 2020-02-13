@@ -21,11 +21,37 @@ public class SeleniumTests {
     }
 
     @Test
-    public void testAddDomain() throws Exception {
+    public void testAddDomain0() throws Exception {
         Object data = readJson(ADD_DOMAIN_FORM_DATA).get(0);
         Selenium.goToWebAddress("http://localhost:3000/domains");
         Selenium.findElementByCss("#root > div:nth-child(2) > div > div > div > button").click();    //<========== button needs a unique class or name asap
         addDomainFromJson(data);
+        doTestAddDomainAssertions(data);
+    }
+
+    @Test
+    public void testAddDomain1() throws Exception {
+        Object data = readJson(ADD_DOMAIN_FORM_DATA).get(1);
+        Selenium.goToWebAddress("http://localhost:3000/domains");
+        Selenium.findElementByCss("#root > div:nth-child(2) > div > div > div > button").click();    //<========== button needs a unique class or name asap
+        addDomainFromJson(data);
+        doTestAddDomainAssertions(data);
+    }
+    @Test
+    public void testAddDomain2() throws Exception {
+        Object data = readJson(ADD_DOMAIN_FORM_DATA).get(2);
+        Selenium.goToWebAddress("http://localhost:3000/domains");
+        Selenium.findElementByCss("#root > div:nth-child(2) > div > div > div > button").click();    //<========== button needs a unique class or name asap
+        addDomainFromJson(data);
+        doTestAddDomainAssertions(data);
+    }
+
+    @AfterClass
+    public static void closeBrowser() {
+        Selenium.closeBrowser();
+    }
+
+    private void doTestAddDomainAssertions(Object data) {
         if (isDataValid(data)) {
             Selenium.waitForModalToClose(2);
             Assert.assertFalse("Modal is: open, expected: closed", isModalOpen());
@@ -46,11 +72,6 @@ public class SeleniumTests {
                 Assert.assertEquals(fieldName + " border color", INVALID_INPUT_BORDER_COLOR, borderColor); // <==== norim raudono border an inputo
             }
         }
-    }
-
-    @AfterClass
-    public static void closeBrowser() {
-        Selenium.closeBrowser();
     }
 
     private static JSONArray readJson(String filename) throws Exception {
@@ -79,7 +100,6 @@ public class SeleniumTests {
 
     private static boolean isModalOpen() {
         String bodyClass = Selenium.findElementByCss("body").getAttribute("class");
-        System.out.println(bodyClass);
         return bodyClass.equals("modal-open");
     }
 }

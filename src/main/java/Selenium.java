@@ -93,7 +93,6 @@ class Selenium {
         WebElement inputCheckInterval = findElementByCss("input[name=\"interval\"]");
         WebElement inputActive = findElementByCss("input[name=\"active\"]");
         WebElement buttonSubmit = findElementByCss("*[type=\"submit\"]");
-        System.out.println("submit button: " + buttonSubmit.getText());
         inputServiceName.sendKeys(serviceName);
         inputUrl.sendKeys(url);
         sSelectServiceType.selectByVisibleText(serviceType);

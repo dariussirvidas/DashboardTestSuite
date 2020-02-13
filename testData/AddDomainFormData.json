@@ -26,5 +26,19 @@
     "interval": "1",
     "active": true,
     "expectedFailedFields":["email", "interval"]
+  },
+  {
+    "serviceName": "Trello",
+    "url": "https://trello.com/",
+    "serviceType": "WebApp",
+    "method": "GET",
+    "auth": false,
+    "user": "",
+    "password": "",
+    "parameters": "",
+    "email": "test@test.com",
+    "interval": "1",
+    "active": true,
+    "expectedFailedFields":["interval"]
   }
 ]
