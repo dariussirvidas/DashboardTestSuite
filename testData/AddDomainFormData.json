@@ -1,0 +1,30 @@
+[
+  {
+    "serviceName": "MDN",
+    "url": "https://developer.mozilla.org/",
+    "serviceType": "WebApp",
+    "method": "GET",
+    "auth": false,
+    "user": "",
+    "password": "",
+    "parameters": "",
+    "email": "test@test.com",
+    "interval": "1000000",
+    "active": true,
+    "expectedFailedFields": []
+  },
+  {
+    "serviceName": "Trello",
+    "url": "https://trello.com/",
+    "serviceType": "WebApp",
+    "method": "GET",
+    "auth": false,
+    "user": "",
+    "password": "",
+    "parameters": "",
+    "email": "test",
+    "interval": "1",
+    "active": true,
+    "expectedFailedFields":["email", "interval"]
+  }
+]
