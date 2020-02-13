@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 class Selenium {
@@ -58,8 +59,17 @@ class Selenium {
         return waiter.until(ExpectedConditions.elementToBeClickable(By.cssSelector(selector)));
     }
 
+    static void waitForModalToClose(int seconds) {
+        WebDriverWait waiter = new WebDriverWait(browser, seconds);
+        waiter.until(ExpectedConditions.attributeToBe(findElementByCss("body"), "class", ""));
+    }
+
     static WebElement findElementByCss(String selector) {
         return browser.findElement(By.cssSelector(selector));
+    }
+
+    static List<WebElement> findElementsByCss(String selector) {
+        return browser.findElements(By.cssSelector(selector));
     }
 
     static WebElement findElementByName(String name) {
@@ -71,8 +81,10 @@ class Selenium {
                           boolean active) {
         WebElement inputServiceName = findElementByCss("input[name=\"serviceName\"]");
         WebElement inputUrl = findElementByCss("input[name=\"url\"]");
-        Select selectServiceType = new Select(findElementByCss("select[name=\"serviceType\"]"));
-        Select selectMethod = new Select(findElementByCss("select[name=\"method\"]"));
+        WebElement selectServiceType = findElementByCss("select[name=\"serviceType\"]");
+        Select sSelectServiceType = new Select(selectServiceType);
+        WebElement selectMethod = findElementByCss("select[name=\"method\"]");
+        Select sSelectMethod = new Select(selectMethod);
         WebElement inputAuth = findElementByCss("input[name=\"auth\"]");
         WebElement inputUser = findElementByCss("input[name=\"user\"]");
         WebElement inputPassword = findElementByCss("input[name=\"password\"]");
@@ -84,25 +96,20 @@ class Selenium {
         System.out.println("submit button: " + buttonSubmit.getText());
         inputServiceName.sendKeys(serviceName);
         inputUrl.sendKeys(url);
-        selectServiceType.selectByVisibleText(serviceType);
-        selectMethod.selectByVisibleText(method);
-        if (auth) {          // assuming unchecked by default
+        sSelectServiceType.selectByVisibleText(serviceType);
+        if (selectMethod.isEnabled()) sSelectMethod.selectByVisibleText(method);
+        if (inputAuth.isEnabled() & auth) {          // assuming unchecked by default
             inputAuth.click();
         }
-        inputUser.sendKeys(user);
-        inputPassword.sendKeys(password);
-        textareaParameters.sendKeys(parameters);
+        if (inputUser.isEnabled()) inputUser.sendKeys(user);
+        if (inputPassword.isEnabled()) inputPassword.sendKeys(password);
+        if (textareaParameters.isEnabled())textareaParameters.sendKeys(parameters);
         inputEmail.sendKeys(email);
         inputCheckInterval.sendKeys(checkInterval);
         if (!active) {      // assuming checked by default
             inputActive.click();
         }
         buttonSubmit.click();
-
-        try {
-            Thread.sleep(5000);      // <===== find a better wait method
-        }
-        catch (Exception ignored) {}
     }
 
     static void closeBrowser() {

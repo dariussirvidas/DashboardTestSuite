@@ -22,12 +22,19 @@ public class SeleniumTests {
 
     @Test
     public void testAddDomain() throws Exception {
-        Object data = readJson(ADD_DOMAIN_FORM_DATA).get(1);
+        Object data = readJson(ADD_DOMAIN_FORM_DATA).get(0);
         Selenium.goToWebAddress("http://localhost:3000/domains");
         Selenium.findElementByCss("#root > div:nth-child(2) > div > div > div > button").click();    //<========== button needs a unique class or name asap
         addDomainFromJson(data);
         if (isDataValid(data)) {
+            Selenium.waitForModalToClose(2);
             Assert.assertFalse("Modal is: open, expected: closed", isModalOpen());
+            boolean domainAdded = false;
+            JSONObject dataJson = (JSONObject) data;
+            for (WebElement td : Selenium.findElementsByCss("td:first-child")) {
+                if (td.getText().equals(dataJson.get("serviceName").toString())) domainAdded = true;
+            }
+            Assert.assertTrue("Domain not found in domain list", domainAdded);
         }
         else {
             Assert.assertTrue("Modal is: closed, expected: open", isModalOpen());
