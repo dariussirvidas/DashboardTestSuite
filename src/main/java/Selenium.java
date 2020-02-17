@@ -1,19 +1,21 @@
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.FileReader;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 class Selenium {
     private static WebDriver browser;
     private static final int WAIT_TIME_SEC = 2;
+    static final String INVALID_INPUT_BORDER_COLOR = "rgba(255, 0, 0, 1)";
 
     /**
      * Chrome 79
@@ -21,22 +23,6 @@ class Selenium {
     static void setupChrome() {
         System.setProperty("webdriver.chrome.driver", "drivers\\chromedriver.exe");
         browser = new ChromeDriver();
-    }
-
-    /**
-     * Firefox 72
-     */
-    static void setupFirefox() {
-        System.setProperty("webdriver.gecko.driver", "target\\classes\\geckodriver.exe");
-        browser = new FirefoxDriver();
-    }
-
-    /**
-     * EdgeHTML 18 needs to run DISM.exe /Online /Add-Capability /CapabilityName:Microsoft.WebDriver~~~~0.0.1.0
-     * in elevated command prompt
-     */
-    static void setupEdge() {
-        browser = new EdgeDriver();
     }
 
     static void maximizeBrowserWindow() {
@@ -78,7 +64,7 @@ class Selenium {
 
     static void addDomain(String serviceName, String url, String serviceType, String method, boolean auth,
                           String user, String password, String parameters, String email, String checkInterval,
-                          boolean active) {
+                          /*String latencyThreshold,*/ boolean active) {
         WebElement inputServiceName = findElementByCss("input[name=\"serviceName\"]");
         WebElement inputUrl = findElementByCss("input[name=\"url\"]");
         WebElement selectServiceType = findElementByCss("select[name=\"serviceType\"]");
@@ -91,6 +77,7 @@ class Selenium {
         WebElement textareaParameters = findElementByCss("textarea[name=\"parameters\"]");
         WebElement inputEmail = findElementByCss("input[name=\"email\"]");
         WebElement inputCheckInterval = findElementByCss("input[name=\"interval\"]");
+        //WebElement inputLatencyThreshold = findElementByCss("input[name=\"latencyThreshold\"]");
         WebElement inputActive = findElementByCss("input[name=\"active\"]");
         WebElement buttonSubmit = findElementByCss("*[type=\"submit\"]");
         inputServiceName.sendKeys(serviceName);
@@ -105,10 +92,22 @@ class Selenium {
         if (textareaParameters.isEnabled())textareaParameters.sendKeys(parameters);
         inputEmail.sendKeys(email);
         inputCheckInterval.sendKeys(checkInterval);
+        //inputLatencyThreshold.sendKeys(latencyThreshold);
         if (!active) {      // assuming checked by default
             inputActive.click();
         }
         buttonSubmit.click();
+    }
+
+    static JSONArray readJson(String filename) throws Exception {
+        FileReader reader = new FileReader(filename);
+        JSONParser jsonParser = new JSONParser();
+        return (JSONArray) jsonParser.parse(reader);
+    }
+
+    static boolean isModalOpen() {
+        String bodyClass = findElementByCss("body").getAttribute("class");
+        return bodyClass.equals("modal-open");
     }
 
     static void closeBrowser() {

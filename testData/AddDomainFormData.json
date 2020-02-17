@@ -2,7 +2,7 @@
   {
     "serviceName": "MDN",
     "url": "https://developer.mozilla.org/",
-    "serviceType": "WebApp",
+    "serviceType": "Service - REST",
     "method": "GET",
     "auth": false,
     "user": "",
@@ -16,7 +16,7 @@
   {
     "serviceName": "Trello",
     "url": "https://trello.com/",
-    "serviceType": "WebApp",
+    "serviceType": "Service - REST",
     "method": "GET",
     "auth": false,
     "user": "",
@@ -30,7 +30,7 @@
   {
     "serviceName": "Trello",
     "url": "https://trello.com/",
-    "serviceType": "WebApp",
+    "serviceType": "Service - REST",
     "method": "GET",
     "auth": false,
     "user": "",
