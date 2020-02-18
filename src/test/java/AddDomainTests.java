@@ -71,7 +71,7 @@ public class AddDomainTests {
 
     @Test
     public void testAddDomain() {
-        Selenium.goToWebAddress("http://localhost:3000/domains");
+        Selenium.goToWebAddress(Selenium.DASHBOARD_WEB_ADDRESS + "domains");
         Selenium.findElementByCss("div.domainButton button").click();    //<========== button needs a unique class or name asap
         Selenium.addDomain(serviceName, url, serviceType, method, auth, user, password, parameters, email, interval, active);
         if (expectedFailedFields.isEmpty()) {

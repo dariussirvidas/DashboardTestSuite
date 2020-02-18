@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 class Selenium {
     private static WebDriver browser;
     private static final int WAIT_TIME_SEC = 2;
+    static final String DASHBOARD_WEB_ADDRESS = "http://localhost:3000/";
     static final String INVALID_INPUT_BORDER_COLOR = "rgba(255, 0, 0, 1)";
 
     /**
