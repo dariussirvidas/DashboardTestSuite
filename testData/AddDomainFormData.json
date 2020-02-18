@@ -10,6 +10,7 @@
     "parameters": "",
     "email": "test@test.com",
     "interval": "1000000",
+    "threshold": "1000",
     "active": true,
     "expectedFailedFields": []
   },
@@ -24,6 +25,7 @@
     "parameters": "",
     "email": "test",
     "interval": "1",
+    "threshold": "1000",
     "active": true,
     "expectedFailedFields":["email", "interval"]
   },
@@ -38,6 +40,7 @@
     "parameters": "",
     "email": "test@test.com",
     "interval": "1",
+    "threshold": "1000",
     "active": true,
     "expectedFailedFields":["interval"]
   }

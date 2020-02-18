@@ -63,9 +63,9 @@ class Selenium {
         return browser.findElement(By.name(name));
     }
 
-    static void addDomain(String serviceName, String url, String serviceType, String method, boolean auth,
-                          String user, String password, String parameters, String email, String checkInterval,
-                          /*String latencyThreshold,*/ boolean active) {
+    static void fillDomainForm(String serviceName, String url, String serviceType, String method, boolean auth,
+                               String user, String password, String parameters, String email, String checkInterval,
+                               String threshold, boolean active) {
         WebElement inputServiceName = findElementByCss("input[name=\"serviceName\"]");
         WebElement inputUrl = findElementByCss("input[name=\"url\"]");
         WebElement selectServiceType = findElementByCss("select[name=\"serviceType\"]");
@@ -78,9 +78,8 @@ class Selenium {
         WebElement textareaParameters = findElementByCss("textarea[name=\"parameters\"]");
         WebElement inputEmail = findElementByCss("input[name=\"email\"]");
         WebElement inputCheckInterval = findElementByCss("input[name=\"interval\"]");
-        //WebElement inputLatencyThreshold = findElementByCss("input[name=\"latencyThreshold\"]");
+        //WebElement inputLatencyThreshold = findElementByCss("input[name=\"threshold\"]");
         WebElement inputActive = findElementByCss("input[name=\"active\"]");
-        WebElement buttonSubmit = findElementByCss("*[type=\"submit\"]");
         inputServiceName.sendKeys(serviceName);
         inputUrl.sendKeys(url);
         sSelectServiceType.selectByVisibleText(serviceType);
@@ -93,10 +92,19 @@ class Selenium {
         if (textareaParameters.isEnabled())textareaParameters.sendKeys(parameters);
         inputEmail.sendKeys(email);
         inputCheckInterval.sendKeys(checkInterval);
-        //inputLatencyThreshold.sendKeys(latencyThreshold);
+        //inputLatencyThreshold.sendKeys(threshold);
         if (!active) {      // assuming checked by default
             inputActive.click();
         }
+    }
+    static void addDomain(String serviceName, String url, String serviceType, String method, boolean auth,
+                          String user, String password, String parameters, String email, String checkInterval,
+                          String threshold, boolean active) {
+        goToWebAddress(Selenium.DASHBOARD_WEB_ADDRESS + "domains");
+        findElementByCss("div.domainButton button").click();
+        fillDomainForm(serviceName, url, serviceType, method, auth, user, password, parameters, email, checkInterval,
+                threshold, active);
+        WebElement buttonSubmit = findElementByCss("button[type=\"submit\"]");
         buttonSubmit.click();
     }
 

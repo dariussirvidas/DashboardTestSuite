@@ -1,9 +1,6 @@
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebElement;
@@ -12,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @RunWith(Parameterized.class)
-public class AddDomainTests {
-    private static final String ADD_DOMAIN_FORM_DATA = "testData\\AddDomainFormData.json";
+public class EditDomainTests {
+    private static final String EDIT_DOMAIN_FORM_DATA = "testData\\AddDomainFormData.json";
 
     private final String serviceName;
     private final String url;
@@ -29,9 +26,9 @@ public class AddDomainTests {
     private final boolean active;
     private final JSONArray expectedFailedFields;
 
-    public AddDomainTests(Object serviceName, Object url, Object serviceType, Object method, Object auth, Object user,
-                         Object password, Object parameters, Object email, Object interval, Object threshold,
-                         Object active, Object expectedFailedFields) {
+    public EditDomainTests(Object serviceName, Object url, Object serviceType, Object method, Object auth, Object user,
+                          Object password, Object parameters, Object email, Object interval, Object threshold,
+                          Object active, Object expectedFailedFields) {
         this.serviceName = (String) serviceName;
         this.url = (String) url;
         this.serviceType = (String) serviceType;
@@ -49,7 +46,7 @@ public class AddDomainTests {
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() throws Exception {
-        JSONArray dataArray = Selenium.readJson(ADD_DOMAIN_FORM_DATA);
+        JSONArray dataArray = Selenium.readJson(EDIT_DOMAIN_FORM_DATA);
         ArrayList<Object[]> parameters = new ArrayList<Object[]>();
         for (Object o : dataArray) {
             JSONObject data = (JSONObject) o;
@@ -69,10 +66,22 @@ public class AddDomainTests {
         Selenium.implicitlyWait();
     }
 
+    @Before
+    public void addTestDomain() {
+        Selenium.addDomain("mockapi", "88.222.15.11:8080/mockapi", "Service - REST",
+                "GET", true, "admin", "password", "", "test@test.com",
+                "60", "1000", true);
+        Selenium.waitForModalToClose(2);
+    }
+
     @Test
     public void testAddDomain() {
-        Selenium.addDomain(serviceName, url, serviceType, method, auth, user, password, parameters, email, interval,
+        WebElement editLastDomain = Selenium.findElementByCss("tr:last-child > td:last-child a.txt");
+        editLastDomain.click();
+        Selenium.fillDomainForm(serviceName, url, serviceType, method, auth, user, password, parameters, email, interval,
                 threshold, active);
+        WebElement saveButton = Selenium.findElementByCss("button???????????????????????????????????");
+        saveButton.click();
         if (expectedFailedFields.isEmpty()) {
             Selenium.waitForModalToClose(2);
             Assert.assertFalse("Modal is: open, expected: closed", Selenium.isModalOpen());
@@ -91,6 +100,15 @@ public class AddDomainTests {
                 Assert.assertEquals(fieldName + " border color", Selenium.INVALID_INPUT_BORDER_COLOR, borderColor); // <==== norim raudono border an inputo
             }
         }
+    }
+
+    @After
+    public void removeTestDomain() {
+        WebElement editLastDomain = Selenium.findElementByCss("tr:last-child > td:last-child a.txt");
+        editLastDomain.click();
+        WebElement deleteButton = Selenium.findElementByCss("button??????????????????????????????");
+        deleteButton.click();
+        Selenium.waitForModalToClose(2);
     }
 
     @AfterClass
