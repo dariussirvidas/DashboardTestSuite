@@ -78,7 +78,7 @@ class Selenium {
         WebElement textareaParameters = findElementByCss("textarea[name=\"parameters\"]");
         WebElement inputEmail = findElementByCss("input[name=\"email\"]");
         WebElement inputCheckInterval = findElementByCss("input[name=\"interval\"]");
-        //WebElement inputLatencyThreshold = findElementByCss("input[name=\"threshold\"]");
+        WebElement inputLatencyThreshold = findElementByCss("input[name=\"threshold\"]");
         WebElement inputActive = findElementByCss("input[name=\"active\"]");
         inputServiceName.sendKeys(serviceName);
         inputUrl.sendKeys(url);
@@ -92,7 +92,7 @@ class Selenium {
         if (textareaParameters.isEnabled())textareaParameters.sendKeys(parameters);
         inputEmail.sendKeys(email);
         inputCheckInterval.sendKeys(checkInterval);
-        //inputLatencyThreshold.sendKeys(threshold);
+        inputLatencyThreshold.sendKeys(threshold);
         if (!active) {      // assuming checked by default
             inputActive.click();
         }

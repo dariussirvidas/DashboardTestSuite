@@ -77,7 +77,7 @@ public class AddDomainTests {
             Selenium.waitForModalToClose(2);
             Assert.assertFalse("Modal is: open, expected: closed", Selenium.isModalOpen());
             boolean domainAdded = false;
-            for (WebElement td : Selenium.findElementsByCss("td:first-child")) {
+            for (WebElement td : Selenium.findElementsByCss("td:nth-child(2) p")) {
                 if (td.getText().equals(serviceName)) domainAdded = true;
             }
             Assert.assertTrue("Domain not found in domain list", domainAdded);
