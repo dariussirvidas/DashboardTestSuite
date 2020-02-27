@@ -15,9 +15,9 @@ import java.util.concurrent.TimeUnit;
 
 class Selenium {
     private static WebDriver browser;
-    private static final int WAIT_TIME_SEC = 2;
-    static final String DASHBOARD_WEB_ADDRESS = "http://localhost:3000/";
-    //static final String DASHBOARD_WEB_ADDRESS = "http://watchhound.azurewebsites.net/";
+    static final int WAIT_TIME_SEC = 2;
+    //static final String DASHBOARD_WEB_ADDRESS = "http://localhost:3000/";
+    static final String DASHBOARD_WEB_ADDRESS = "http://watchhound.azurewebsites.net/";
     static final String DELETE_BUTTON_SELECTOR = "form>button:last-child";
     static final String CONFIRM_BUTTON_SELECTOR = "form>button:nth-child(2)";
     static final String EDIT_BUTTON_SELECTOR = "i.material-icons.iconHover";//"a.btn.btn-link.btn-sm.txt";
@@ -136,28 +136,22 @@ class Selenium {
 
     static void delete(WebElement editButton) {
         editButton.click();
-        System.out.println("after edit button click");
         WebElement buttonDelete = waitForClickableByCss(DELETE_BUTTON_SELECTOR, 2);
         buttonDelete.click();
-        System.out.println("after delete button click");
         WebElement buttonConfirm = waitForClickableByCss(CONFIRM_BUTTON_SELECTOR, 2);
         buttonConfirm.click();
-        //waitForModalToClose(2);
-        /*try {
-            Thread.sleep(10000);
-        }
-        catch (Exception ignored) {}*/
+        waitForModalToClose(WAIT_TIME_SEC);
     }
 
     static void deleteAll() {
-        ArrayList buttonsEdit = (ArrayList) findElementsByCss(EDIT_BUTTON_SELECTOR);
+        ArrayList <WebElement> buttonsEdit = (ArrayList <WebElement>) findElementsByCss(EDIT_BUTTON_SELECTOR);
+        for (WebElement buttonEdit : buttonsEdit) {
+            delete(buttonEdit);
+        }/*
         int length = buttonsEdit.size();
-        System.out.println("array length: " + length);
         for (int i = 0; i < length; i++) {
-            System.out.println("i = " + i);
             delete((WebElement) buttonsEdit.get(i));
-            System.out.println("after delete " + i);
-        }
+        }*/
     }
 
     static void closeBrowser() {

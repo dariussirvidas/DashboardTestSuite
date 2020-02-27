@@ -6,6 +6,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
@@ -73,10 +74,10 @@ public class AddDomainTests {
 
     @Test
     public void testAddDomain() {
-        /*Selenium.addDomain(serviceName, url, serviceType, method, auth, user, password, parameters, email, interval,
+        Selenium.addDomain(serviceName, url, serviceType, method, auth, user, password, parameters, email, interval,
                 threshold, active);
         if (expectedFailedFields.isEmpty()) {
-            Selenium.waitForModalToClose(2);
+            Selenium.waitForModalToClose(Selenium.WAIT_TIME_SEC);
             Assert.assertFalse("Modal is: open, expected: closed", Selenium.isModalOpen());
             boolean domainAdded = false;
             for (WebElement td : Selenium.findElementsByCss("td:nth-child(2) p")) {
@@ -85,14 +86,16 @@ public class AddDomainTests {
             Assert.assertTrue("Domain not found in domain list", domainAdded);
         }
         else {
+            try { Selenium.waitForModalToClose(Selenium.WAIT_TIME_SEC); }
+            catch (TimeoutException ignored) {}
             Assert.assertTrue("Modal is: closed, expected: open", Selenium.isModalOpen());
-            for (Object expectedFailedField : expectedFailedFields) {
+            /*for (Object expectedFailedField : expectedFailedFields) {
                 String fieldName = (String) expectedFailedField;
                 WebElement field = Selenium.findElementByName(fieldName);
                 String borderColor = field.getCssValue("border-top-color");
                 Assert.assertEquals(fieldName + " border color", Selenium.INVALID_INPUT_BORDER_COLOR, borderColor); // <==== norim raudono border an inputo
-            }
-        }*/
+            }*/
+        }
     }
 
     @AfterClass

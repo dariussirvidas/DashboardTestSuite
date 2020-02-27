@@ -8,9 +8,9 @@
     "user": "",
     "password": "",
     "parameters": "",
-    "email": "test@test.com",
-    "interval": "1000000",
-    "threshold": "1000",
+    "email": "watchhoundapi@gmail.com",
+    "interval": "60",
+    "threshold": "500",
     "active": true,
     "expectedFailedFields": []
   },
@@ -25,7 +25,7 @@
     "parameters": "",
     "email": "test",
     "interval": "1",
-    "threshold": "1000",
+    "threshold": "500",
     "active": true,
     "expectedFailedFields":["email", "interval"]
   },
@@ -38,9 +38,9 @@
     "user": "",
     "password": "",
     "parameters": "",
-    "email": "test@test.com",
+    "email": "watchhoundapi@gmail.com",
     "interval": "1",
-    "threshold": "1000",
+    "threshold": "500",
     "active": true,
     "expectedFailedFields":["interval"]
   }
