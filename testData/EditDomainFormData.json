@@ -1,0 +1,47 @@
+[
+  {
+    "serviceName": "MDN",
+    "url": "https://developer.mozilla.org/",
+    "serviceType": "Service - REST",
+    "method": "GET",
+    "auth": false,
+    "user": "",
+    "password": "",
+    "parameters": "",
+    "email": "watchhoundapi@gmail.com",
+    "interval": "60",
+    "threshold": "500",
+    "active": true,
+    "expectedFailedFields": []
+  },
+  {
+    "serviceName": "Trello",
+    "url": "https://trello.com/",
+    "serviceType": "Service - REST",
+    "method": "GET",
+    "auth": false,
+    "user": "",
+    "password": "",
+    "parameters": "",
+    "email": "test",
+    "interval": "1",
+    "threshold": "500",
+    "active": true,
+    "expectedFailedFields":["email", "interval"]
+  },
+  {
+    "serviceName": "Trello",
+    "url": "https://trello.com/",
+    "serviceType": "Service - REST",
+    "method": "GET",
+    "auth": false,
+    "user": "",
+    "password": "",
+    "parameters": "",
+    "email": "watchhoundapi@gmail.com",
+    "interval": "1",
+    "threshold": "500",
+    "active": true,
+    "expectedFailedFields":["interval"]
+  }
+]

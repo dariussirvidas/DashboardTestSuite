@@ -19,8 +19,9 @@ class Selenium {
     //static final String DASHBOARD_WEB_ADDRESS = "http://localhost:3000/";
     static final String DASHBOARD_WEB_ADDRESS = "http://watchhound.azurewebsites.net/";
     static final String DELETE_BUTTON_SELECTOR = "form>button:last-child";
+    static final String SAVE_BUTTON_SELECTOR = "form>button:nth-last-child(3)";
     static final String CONFIRM_BUTTON_SELECTOR = "form>button:nth-child(2)";
-    static final String EDIT_BUTTON_SELECTOR = "i.material-icons.iconHover";//"a.btn.btn-link.btn-sm.txt";
+    static final String EDIT_BUTTON_SELECTOR = "i.material-icons.iconHover";
     static final String INVALID_INPUT_BORDER_COLOR = "rgba(255, 0, 0, 1)";
     static final String LOGIN_USERNAME = "Darius";
     static final String LOGIN_PASSWORD = "Password-1";
@@ -87,23 +88,64 @@ class Selenium {
         WebElement inputCheckInterval = findElementByCss("input[name=\"interval\"]");
         WebElement inputLatencyThreshold = findElementByCss("input[name=\"threshold\"]");
         WebElement inputActive = findElementByCss("input[name=\"active\"]");
-        inputServiceName.sendKeys(serviceName);
-        inputUrl.sendKeys(url);
-        sSelectServiceType.selectByVisibleText(serviceType);
-        if (selectMethod.isEnabled()) sSelectMethod.selectByVisibleText(method);
-        if (inputAuth.isEnabled() & auth) {          // assuming unchecked by default
+        /////////////////////////////////// service name ///////////////////////////////////////
+        if (!serviceName.isEmpty()) {
+            inputServiceName.clear();
+            inputServiceName.sendKeys(serviceName);
+        }
+        /////////////////////////////// url ///////////////////////////////////////////
+        if (!url.isEmpty()) {
+            inputUrl.clear();
+            inputUrl.sendKeys(url);
+        }
+        //////////////////////////// service type ////////////////////////////////
+        if (!serviceType.isEmpty()) sSelectServiceType.selectByVisibleText(serviceType);
+        ///////////////////////// method /////////////////////////////////////////
+        if (selectMethod.isEnabled() && !method.isEmpty()) sSelectMethod.selectByVisibleText(method);
+        ///////////////// auth ////////////////////////////////
+        if (inputAuth.isSelected()) {
+            if (!auth) inputAuth.click();
+        }
+        else if (auth) {
             inputAuth.click();
         }
-        if (inputUser.isEnabled()) inputUser.sendKeys(user);
-        if (inputPassword.isEnabled()) inputPassword.sendKeys(password);
-        if (textareaParameters.isEnabled())textareaParameters.sendKeys(parameters);
-        inputEmail.sendKeys(email);
-        inputCheckInterval.sendKeys(checkInterval);
-        inputLatencyThreshold.sendKeys(threshold);
-        /*if (!active) {      // assuming checked by default
+        //////////////////////// user ////////////////////////////////
+        if (inputUser.isEnabled() && !user.isEmpty()) {
+            inputUser.clear();
+            inputUser.sendKeys(user);
+        }
+        //////////////////////// password /////////////////////////////////
+        if (inputPassword.isEnabled() && !password.isEmpty()) {
+            inputPassword.clear();
+            inputPassword.sendKeys(password);
+        }
+        ////////////////////////// parameters /////////////////////////////
+        if (textareaParameters.isEnabled() && !parameters.isEmpty()) {
+            textareaParameters.clear();
+            textareaParameters.sendKeys(parameters);
+        }
+        //////////////////////////// email ////////////////////////////////
+        if (!email.isEmpty()) {
+            inputEmail.clear();
+            inputEmail.sendKeys(email);
+        }
+        ///////////////////////// check interval /////////////////////////////
+        if (!checkInterval.isEmpty()) {
+            inputCheckInterval.clear();
+            inputCheckInterval.sendKeys(checkInterval);
+        }
+        ////////////////////// threshold //////////////////////////////////
+        if (!threshold.isEmpty()) {
+            inputLatencyThreshold.clear();
+            inputLatencyThreshold.sendKeys(threshold);
+        }
+        ////////////////////////// active //////////////////////////////////////
+        if (inputActive.isSelected()) {
+            if (!active) inputActive.click();
+        }
+        else if (active) {
             inputActive.click();
-        }*/
-        if (active) inputActive.click(); // assuming unchecked by default
+        }
     }
     static void addDomain(String serviceName, String url, String serviceType, String method, boolean auth,
                           String user, String password, String parameters, String email, String checkInterval,

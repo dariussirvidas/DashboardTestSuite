@@ -1,5 +1,4 @@
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -12,10 +11,8 @@ public class ScenarioTests {
         Selenium.maximizeBrowserWindow();
         Selenium.implicitlyWait();
         Selenium.loginDefault();
-    }
-
-    @Before
-    public void addTestDomain() {
+        Selenium.goToWebAddress(Selenium.DASHBOARD_WEB_ADDRESS + "domains");
+        Selenium.deleteAll();
         MockapiControl.setDefaults("200", "0");
         Selenium.addDomain("mockapi", "http://88.222.15.11:8080/mockapi/auth",
                 "Service - REST", "GET", true, "admin", "password",

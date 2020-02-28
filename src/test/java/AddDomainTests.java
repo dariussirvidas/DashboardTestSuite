@@ -69,6 +69,8 @@ public class AddDomainTests {
         Selenium.maximizeBrowserWindow();
         Selenium.implicitlyWait();
         Selenium.loginDefault();
+        Selenium.goToWebAddress(Selenium.DASHBOARD_WEB_ADDRESS + "domains");
+        Selenium.deleteAll();
     }
 
     @Test
