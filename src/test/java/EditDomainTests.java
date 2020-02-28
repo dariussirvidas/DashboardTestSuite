@@ -68,9 +68,9 @@ public class EditDomainTests {
 
     @Before
     public void addTestDomain() {
-        Selenium.addDomain("mockapi", "88.222.15.11:8080/mockapi", "Service - REST",
-                "GET", true, "admin", "password", "", "test@test.com",
-                "60", "1000", true);
+        Selenium.addDomain("mockapi", "http://88.222.15.11:8080/mockapi", "Service - REST",
+                "GET", true, "admin", "password", "",
+                "watchhoundapi@gmail.com","60", "1000", true);
         Selenium.waitForModalToClose(2);
     }
 

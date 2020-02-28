@@ -22,6 +22,8 @@ class Selenium {
     static final String CONFIRM_BUTTON_SELECTOR = "form>button:nth-child(2)";
     static final String EDIT_BUTTON_SELECTOR = "i.material-icons.iconHover";//"a.btn.btn-link.btn-sm.txt";
     static final String INVALID_INPUT_BORDER_COLOR = "rgba(255, 0, 0, 1)";
+    static final String LOGIN_USERNAME = "Darius";
+    static final String LOGIN_PASSWORD = "Password-1";
 
     /**
      * Chrome 79
@@ -98,9 +100,10 @@ class Selenium {
         inputEmail.sendKeys(email);
         inputCheckInterval.sendKeys(checkInterval);
         inputLatencyThreshold.sendKeys(threshold);
-        if (!active) {      // assuming checked by default
+        /*if (!active) {      // assuming checked by default
             inputActive.click();
-        }
+        }*/
+        if (active) inputActive.click(); // assuming unchecked by default
     }
     static void addDomain(String serviceName, String url, String serviceType, String method, boolean auth,
                           String user, String password, String parameters, String email, String checkInterval,
@@ -134,11 +137,16 @@ class Selenium {
         waitForClickableByCss("a.navbar-brand", WAIT_TIME_SEC);
     }
 
+    static void loginDefault() {
+        goToWebAddress(Selenium.DASHBOARD_WEB_ADDRESS);
+        login(LOGIN_USERNAME, LOGIN_PASSWORD);
+    }
+
     static void delete(WebElement editButton) {
         editButton.click();
-        WebElement buttonDelete = waitForClickableByCss(DELETE_BUTTON_SELECTOR, 2);
+        WebElement buttonDelete = waitForClickableByCss(DELETE_BUTTON_SELECTOR, WAIT_TIME_SEC);
         buttonDelete.click();
-        WebElement buttonConfirm = waitForClickableByCss(CONFIRM_BUTTON_SELECTOR, 2);
+        WebElement buttonConfirm = waitForClickableByCss(CONFIRM_BUTTON_SELECTOR, WAIT_TIME_SEC);
         buttonConfirm.click();
         waitForModalToClose(WAIT_TIME_SEC);
     }
@@ -147,11 +155,7 @@ class Selenium {
         ArrayList <WebElement> buttonsEdit = (ArrayList <WebElement>) findElementsByCss(EDIT_BUTTON_SELECTOR);
         for (WebElement buttonEdit : buttonsEdit) {
             delete(buttonEdit);
-        }/*
-        int length = buttonsEdit.size();
-        for (int i = 0; i < length; i++) {
-            delete((WebElement) buttonsEdit.get(i));
-        }*/
+        }
     }
 
     static void closeBrowser() {

@@ -68,8 +68,7 @@ public class AddDomainTests {
         Selenium.setupChrome();
         Selenium.maximizeBrowserWindow();
         Selenium.implicitlyWait();
-        Selenium.goToWebAddress(Selenium.DASHBOARD_WEB_ADDRESS);
-        Selenium.login("Darius", "Password-1");
+        Selenium.loginDefault();
     }
 
     @Test
