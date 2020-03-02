@@ -201,7 +201,7 @@ class Selenium {
     }
 
     static void closeBrowser() {
-        browser.close();
+        if (browser != null) browser.quit();
     }
 
 }
