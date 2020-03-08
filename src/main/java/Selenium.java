@@ -16,8 +16,8 @@ import java.util.concurrent.TimeUnit;
 class Selenium {
     private static WebDriver browser;
     static final int WAIT_TIME_SEC = 2;
-    //static final String DASHBOARD_WEB_ADDRESS = "http://localhost:3000/";
-    static final String DASHBOARD_WEB_ADDRESS = "http://watchhound.azurewebsites.net/";
+    static final String DASHBOARD_WEB_ADDRESS = "http://localhost:3000/";
+    //static final String DASHBOARD_WEB_ADDRESS = "http://watchhound.azurewebsites.net/";
     static final String DELETE_BUTTON_SELECTOR = "form>button:last-child";
     static final String SAVE_BUTTON_SELECTOR = "form>button:nth-last-child(3)";
     static final String CONFIRM_BUTTON_SELECTOR = "form>button:nth-child(2)";
@@ -41,6 +41,7 @@ class Selenium {
     static void implicitlyWait() {
         browser.manage().timeouts().implicitlyWait(WAIT_TIME_SEC, TimeUnit.SECONDS);
     }
+
     static void implicitlyWait(int seconds) {
         browser.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
     }
@@ -69,6 +70,16 @@ class Selenium {
 
     static WebElement findElementByName(String name) {
         return browser.findElement(By.name(name));
+    }
+
+    static WebElement findElementByXpath(String xpath) {
+        WebDriverWait waiter = new WebDriverWait(browser, 10);
+        waiter.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+        return browser.findElement(By.xpath(xpath));
+    }
+
+    static WebElement findElementByClass(String className) {
+        return browser.findElement(By.className(className));
     }
 
     static void fillDomainForm(String serviceName, String url, String serviceType, String method, boolean auth,
@@ -105,8 +116,7 @@ class Selenium {
         ///////////////// auth ////////////////////////////////
         if (inputAuth.isSelected()) {
             if (!auth) inputAuth.click();
-        }
-        else if (auth) {
+        } else if (auth) {
             inputAuth.click();
         }
         //////////////////////// user ////////////////////////////////
@@ -142,11 +152,11 @@ class Selenium {
         ////////////////////////// active //////////////////////////////////////
         if (inputActive.isSelected()) {
             if (!active) inputActive.click();
-        }
-        else if (active) {
+        } else if (active) {
             inputActive.click();
         }
     }
+
     static void addDomain(String serviceName, String url, String serviceType, String method, boolean auth,
                           String user, String password, String parameters, String email, String checkInterval,
                           String threshold, boolean active) {
@@ -173,10 +183,17 @@ class Selenium {
         WebElement inputUsername = findElementByCss("input[name=\"username\"]");
         WebElement inputPassword = findElementByCss("input[name=\"password\"]");
         WebElement buttonLogin = findElementByCss("button[type=\"submit\"]");
+        inputUsername.clear();
         inputUsername.sendKeys(username);
+        inputPassword.clear();
         inputPassword.sendKeys(password);
         buttonLogin.click();
-        waitForClickableByCss("a.navbar-brand", WAIT_TIME_SEC);
+        //waitForClickableByCss("a.navbar-brand", WAIT_TIME_SEC);
+    }
+
+    static void logout(){
+        WebElement logOut = Selenium.findElementByXpath("/html/body/div/div[1]/div/nav/div/ul/a[5]/button");
+        logOut.click();
     }
 
     static void loginDefault() {
@@ -194,7 +211,7 @@ class Selenium {
     }
 
     static void deleteAll() {
-        ArrayList <WebElement> buttonsEdit = (ArrayList <WebElement>) findElementsByCss(EDIT_BUTTON_SELECTOR);
+        ArrayList<WebElement> buttonsEdit = (ArrayList<WebElement>) findElementsByCss(EDIT_BUTTON_SELECTOR);
         for (WebElement buttonEdit : buttonsEdit) {
             delete(buttonEdit);
         }
