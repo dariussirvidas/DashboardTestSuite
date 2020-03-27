@@ -17,13 +17,14 @@ class Selenium {
     private static WebDriver browser;
     static final int WAIT_TIME_SEC = 2;
     //static final String DASHBOARD_WEB_ADDRESS = "http://localhost:3000/";
-    static final String DASHBOARD_WEB_ADDRESS = "http://watchhound.azurewebsites.net/";
-    static final String DELETE_BUTTON_SELECTOR = "form>button:last-child";
-    static final String SAVE_BUTTON_SELECTOR = "form>button:nth-last-child(3)";
+    static final String DASHBOARD_WEB_ADDRESS = "http://watchhoundtest.azurewebsites.net/";
+    static final String DELETE_BUTTON_SELECTOR = "form>div.d-flex:nth-last-child(2)>button:nth-child(3)";
+    static final String SAVE_BUTTON_SELECTOR = "form>div.d-flex:nth-last-child(2)>button:first-child";
     static final String CONFIRM_BUTTON_SELECTOR = "form>button:nth-child(2)";
     static final String EDIT_BUTTON_SELECTOR = "i.material-icons.iconHover";
-    static final String INVALID_INPUT_BORDER_COLOR = "rgba(255, 0, 0, 1)";
-    static final String LOGIN_USERNAME = "Darius";
+    static final String STICKER_TIMER_SELECTOR = "div.card-body>p:nth-last-child(3)";
+    //static final String INVALID_INPUT_BORDER_COLOR = "rgba(255, 0, 0, 1)";
+    static final String LOGIN_USERNAME = "Selenium";
     static final String LOGIN_PASSWORD = "Password-1";
 
     /**
@@ -52,6 +53,11 @@ class Selenium {
     static WebElement waitForClickableByCss(String selector, int seconds) {
         WebDriverWait waiter = new WebDriverWait(browser, seconds);
         return waiter.until(ExpectedConditions.elementToBeClickable(By.cssSelector(selector)));
+    }
+
+    static void waitForCountdownToReach(int timerValue, int maxWaitTimeSeconds) {
+        WebDriverWait waiter = new WebDriverWait(browser, maxWaitTimeSeconds);
+        waiter.until(ExpectedConditions.textToBe(By.cssSelector(STICKER_TIMER_SELECTOR), "Next Check in: " + timerValue + " s"));
     }
 
     static void waitForModalToClose(int seconds) {
